@@ -9,9 +9,9 @@ import FallbackPage from "./pages/FallbackPage";
 
 function App() {
   return (
-    <Router basename="/contract-gen">
+    <Router basename="/YKPPEF0-ContractFormatter-557763939">
       <Routes>
-        <Route path="/YKPPEF0-ContractFormatter-557763939" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="*" element={<FallbackPage />} />
       </Routes>
     </Router>
