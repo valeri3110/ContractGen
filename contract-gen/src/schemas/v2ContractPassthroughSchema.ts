@@ -15,14 +15,14 @@ const toSchema = z
     sms: stringOrNull,
     evoice: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const fromSchema = z
   .object({
     email: stringOrNull,
     name: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const optInSchema = z
   .object({
@@ -32,7 +32,7 @@ const optInSchema = z
     extnCustomerNotificationPreference: stringOrNull,
     extnSVOCPRSNCustID: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const digestSchema = z
   .object({
@@ -42,7 +42,7 @@ const digestSchema = z
     storeNumber: stringOrNull,
     zipCode: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const securitySchema = z
   .object({
@@ -53,14 +53,14 @@ const securitySchema = z
     passwordResetUrl: stringOrNull,
     phone: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const metadataSchema = z
   .object({
     key: stringOrNull,
     value: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const addressSchema = z
   .object({
@@ -72,7 +72,7 @@ const addressSchema = z
     country: stringOrNull,
     postalCode: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const customerInfoSchema = z
   .object({
@@ -83,7 +83,7 @@ const customerInfoSchema = z
     dayPhone: stringOrNull,
     email: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const deliverySchema = z
   .object({
@@ -103,7 +103,7 @@ const deliverySchema = z
     vehicleType: stringOrNull,
     trackingUrl: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const paymentSchema = z
   .object({
@@ -112,7 +112,7 @@ const paymentSchema = z
     paymentType: stringOrNull,
     tenderAmount: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const totalSchema = z
   .object({
@@ -125,7 +125,7 @@ const totalSchema = z
     total: stringOrNull,
     totalRefundAmount: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const eligibleProtectionPlanSchema = z
   .object({
@@ -138,7 +138,7 @@ const eligibleProtectionPlanSchema = z
     duration: stringOrNull,
     planDetailsUrl: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const partServiceSchema = z
   .object({
@@ -150,7 +150,7 @@ const partServiceSchema = z
     quantity:  z.union([z.string(), z.number(), z.null()]),
     unitPrice: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const serviceSchema = z
   .object({
@@ -160,7 +160,7 @@ const serviceSchema = z
     quantity: z.union([z.string(), z.number(), z.null()]),
     agreementURL: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const installationProviderSchema = z
   .object({
@@ -169,7 +169,7 @@ const installationProviderSchema = z
     vendorId: stringOrNull,
     vendorName: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const lineItemSchema = z
   .object({
@@ -198,7 +198,7 @@ const lineItemSchema = z
     storeSku: stringOrNull,
     unitPrice: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const workOrderOrItemGroupSchema = z
   .object({
@@ -216,14 +216,14 @@ const workOrderOrItemGroupSchema = z
     storeNumber: stringOrNull,
     workOrderNumber: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const updatedWorkOrderSchema = z
   .object({
     workOrderNo: stringOrNull,
     reasonCode: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const orderSchema = z
   .object({
@@ -247,7 +247,7 @@ const orderSchema = z
     updatedWorkOrders: z.array(updatedWorkOrderSchema).nullable(),
     workOrdersOrItemGroups: z.array(workOrderOrItemGroupSchema),
   })
-  .strict();
+  .passthrough();
 
 // Domain/Journey Specific Fields
 const reservationSchema = z
@@ -264,7 +264,7 @@ const reservationSchema = z
     returnTime: stringOrNull,
     vehicleRental: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const appointmentSchema = z
   .object({
@@ -282,7 +282,7 @@ const appointmentSchema = z
     timeZone: stringOrNull,
     webexUrl: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 const workShopSchema = z
   .object({
@@ -291,7 +291,7 @@ const workShopSchema = z
     name: stringOrNull,
     time: stringOrNull,
   })
-  .strict();
+  .passthrough();
 
 // Base Schema for V2 Contract
 const baseSchema = z
@@ -299,7 +299,7 @@ const baseSchema = z
     appName: stringOrNull,
     attributes: z.object({
       clientId: stringOrNull,
-    }),
+    }).passthrough(),
     digest: digestSchema,
     security: securitySchema,
     from: fromSchema,
@@ -337,7 +337,7 @@ const baseSchema = z
     paymentCard: z.object({
       cardType: stringOrNull,
       last4Digits: stringOrNull,
-    }).nullable(),
+    }).passthrough().nullable(),
     redemptionCode: stringOrNull,
     reservation: reservationSchema,
     signOutTimestamp: stringOrNull,
@@ -352,7 +352,7 @@ const baseSchema = z
     workShop: workShopSchema,
     to: z.array(toSchema),
   })
-  .strict();
+  .passthrough();
 
-// Makes all fields optional, but disallow extra fields
-export const v2ContractSchema = baseSchema.deepPartial().strict();
+// Makes all fields optional, but allow extra fields
+export const v2ContractPassthroughSchema = baseSchema.deepPartial().passthrough();

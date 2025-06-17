@@ -1,0 +1,317 @@
+import { z } from "zod";
+
+// Helper types
+const stringOrNull = z.string().nullable();
+const booleanOrNull = z.boolean().nullable();
+const numberOrNull = z.number().nullable();
+const stringOrBoolean = z.union([z.string(), z.boolean()]);
+const booleanOrStringOrNull = z.union([z.boolean(), z.string(), z.null()]);
+
+// Definitions
+const attachmentSchema = z.object({
+    contentType: stringOrNull,
+    fileName: stringOrNull,
+    content: stringOrNull,
+}).strict();
+
+const toInfoSchema = z.object({
+    email: stringOrNull,
+    name: stringOrNull,
+}).strict();
+
+const totalsSchema = z.object({
+    estimatedTotal: stringOrNull,
+    subTotal: stringOrNull,
+    feeTotal: stringOrNull,
+    discounts: stringOrNull,
+    salesTax: stringOrNull,
+    deliveryCharge: stringOrNull,
+}).strict();
+
+const deliverySchema = z.object({
+    deliveryDate: stringOrNull,
+    revisedDeliveryDate: stringOrNull,
+    deliveryTimeStart: stringOrNull,
+    deliveryTimeEnd: stringOrNull,
+    deliveryMethod: stringOrNull,
+    deliveryMessage: stringOrNull,
+    deliveryStatus: stringOrNull,
+    workOrderTrackingUrl: stringOrNull,
+    trackingNumber: stringOrNull,
+    instructionMessage: stringOrNull,
+    split: booleanOrNull,
+    dedicatedDelivery: stringOrBoolean,
+    carrier: stringOrNull,
+    carrierName: stringOrNull,
+    vehicleType: stringOrNull,
+    originalETA: stringOrNull,
+    revisedTimeStart: stringOrNull,
+    revisedTimeEnd: stringOrNull,
+}).strict();
+
+const addressSchema = z.object({
+    addressLine1: stringOrNull,
+    addressLine2: stringOrNull,
+    addressLine3: stringOrNull,
+    street: stringOrNull,
+    city: stringOrNull,
+    state: stringOrNull,
+    postalCode: stringOrNull,
+    country: stringOrNull,
+}).strict();
+
+const customerInfoObjectSchema = z.object({
+    customerName: stringOrNull,
+    firstName: stringOrNull,
+    lastName: stringOrNull,
+    pickUpPersonFirstName: stringOrNull,
+    pickUpPersonLastName: stringOrNull,
+    phoneNumber: stringOrNull,
+    dayPhone: stringOrNull,
+    email: stringOrNull,
+    address: addressSchema,
+    companyName: stringOrNull,
+    organizationName: stringOrNull,
+    loginID: stringOrNull,
+    passwordUrl: stringOrNull,
+    emailId: stringOrNull,
+    oldEmail: stringOrNull,
+    cardType: stringOrNull,
+    customerType: stringOrNull,
+    allOrders: booleanOrNull,
+    lineItemIds: z.array(stringOrNull),
+    reset: stringOrNull,
+}).strict();
+
+const optInSchema = z.object({
+    customerGoldenRecordID: stringOrNull,
+    onlineSmsOptIn: booleanOrStringOrNull,
+    onlineEvoiceOptIn: booleanOrStringOrNull,
+    extnCustomerNotificationPreference: stringOrNull,
+    extnSVOCPRSNCustID: stringOrNull,
+}).strict();
+
+const templateInfoSchema = z.object({
+    isAdmin: booleanOrNull,
+    signatureRequired: stringOrNull,
+    showDeposit: booleanOrNull,
+    isToolDepositAmtZero: booleanOrNull,
+    isConfirmationOrReminder: booleanOrNull,
+    vehicleCategory: booleanOrNull,
+    multipleTool: booleanOrNull,
+    production: booleanOrNull,
+    frStore: booleanOrNull,
+    tableTitle: stringOrNull,
+    depositAmount: stringOrNull,
+    showManual: booleanOrNull,
+    depositSubtext: stringOrNull,
+    isConfirmationOReminder: booleanOrNull,
+    canceledDueToAvailability: booleanOrNull,
+    isPaymentAuthPilot: booleanOrNull,
+    depositPaid: stringOrNull,
+    depositOwed: stringOrNull,
+    taxAmount: stringOrNull,
+    tools: z.array(z.any()).nullable(),
+    title: stringOrNull,
+    sourceCd: stringOrBoolean,
+    associateMessage: stringOrNull,
+    proContactNumber: stringOrNull,
+    militaryDiscountApplied: booleanOrNull,
+    giftCardPresent: booleanOrNull,
+    redemptionCode: stringOrNull,
+    specialInstructions: z.array(z.any()),
+    total: totalsSchema,
+    storeNumber: stringOrNull,
+    storePhoneNumber: stringOrNull,
+    poNumber: stringOrNull,
+    customerExperience: stringOrNull,
+    extnHostSrcProcess: stringOrNull,
+    violations: z.any(),
+    curbsideDelivery: stringOrNull,
+    curbsideDeliveryWebformEnabled: stringOrNull,
+    curbsideDeliveryLink: stringOrNull,
+    weatherVerbiageEnabled: stringOrBoolean,
+    medalliaSurveyUrl: stringOrNull,
+    highVolumeVerbiage: stringOrNull,
+    optOutCode: stringOrNull,
+    flocStore: stringOrNull,
+    customerInfo: customerInfoObjectSchema,
+    quote: z.any(),
+    delivery: deliverySchema,
+    pickup: z.any(),
+    jobsiteContact: z.any(),
+    totals: totalsSchema,
+    feeList: z.any(),
+    contract: z.any(),
+    hdWillCallList: z.array(z.any()),
+    invitationUrl: stringOrNull,
+    isRunnerInvite: stringOrNull,
+    isAdminInvite: stringOrNull,
+    cardType: stringOrNull,
+    last4Digits: stringOrNull,
+    name: stringOrNull,
+    preMessage: stringOrNull,
+    message: stringOrNull,
+    postMessage: stringOrNull,
+    admin: stringOrNull,
+    runner: stringOrNull,
+    frequency: stringOrNull,
+    allowanceAmount: stringOrNull,
+    expirationTs: stringOrNull,
+    appointment: z.any(),
+    subject: stringOrNull,
+    attachments: z.array(attachmentSchema).nullable(),
+    body: stringOrNull,
+    associateFirstName: stringOrNull,
+    listId: stringOrNull,
+    listName: stringOrNull,
+    listMessage: stringOrNull,
+    originalMessage: stringOrNull,
+    customerEmail: stringOrNull,
+    taxExemptPortalUploadLink: stringOrNull,
+    taxExemptId: stringOrNull,
+    status: stringOrNull,
+    approvedStates: z.array(stringOrNull),
+    rejectedStates: z.array(stringOrNull),
+    reason: stringOrNull,
+    myAccountLink: stringOrNull,
+    pickType: stringOrNull,
+    releaseType: stringOrNull,
+    removeInstallation: stringOrNull,
+    twoStep: stringOrNull,
+    surveyLink: stringOrNull,
+    url: stringOrNull,
+    urls: z.array(stringOrNull),
+    collections: z.array(z.any()),
+    lineItems: z.array(z.any()).nullable(),
+    receipt: z.object({ lines: z.array(z.any()) }),
+    signOutTimestamp: stringOrNull,
+    security: z.object({
+        deviceCity: stringOrNull,
+        date: stringOrNull,
+        deviceOS: stringOrNull,
+        phone: stringOrNull,
+        passcode: stringOrNull,
+    }),
+    transactionType: stringOrNull,
+    totalCardsRemoved: numberOrNull,
+    userRole: stringOrNull,
+    paymentCard: z.object({
+        last4Digits: stringOrNull,
+        citiAccountLast4Digits: stringOrNull,
+        cardType: stringOrNull,
+        nickName: stringOrNull,
+    }),
+    membership: z.array(z.any()),
+    program: z.object({
+        name: stringOrNull,
+        status: stringOrNull,
+    }),
+    workShop: z.object({
+        message: stringOrNull,
+        name: stringOrNull,
+        date: stringOrNull,
+        time: stringOrNull,
+    }),
+    storeDetails: z.any(),
+    runnerName: stringOrNull,
+    proDeskNumber: stringOrNull,
+    jobName: stringOrNull,
+    smsType: stringOrNull,
+    approverName: stringOrNull,
+    basketUrl: stringOrNull,
+    totalAmount: stringOrNull,
+    order: z.any(),
+    flags: z.object({
+        registeredType: stringOrNull,
+    }),
+    triggerType: stringOrNull,
+    triggerValue: stringOrNull,
+    workflowName: stringOrNull,
+    emailType: stringOrNull,
+    selfAssign: booleanOrNull,
+    allOrders: booleanOrNull,
+    timestamp: stringOrNull,
+    cartTotal: stringOrNull,
+    spendingLimit: stringOrNull,
+    companyName: stringOrNull,
+    optOutLink: stringOrNull,
+    optOutAllLink: stringOrNull,
+    sku: stringOrNull,
+    reservation: z.any(),
+    redirectUrl: stringOrNull,
+    faqUrl: stringOrNull,
+    updateUrl: stringOrNull,
+    supportEmail: stringOrNull,
+    supportForm: stringOrNull,
+    supportPhone: stringOrNull,
+    lastModifiedDt: stringOrNull,
+    businessName: stringOrNull,
+    customerServiceAgreementUrl: stringOrNull,
+    rejectionReasons: z.array(stringOrNull),
+    invitationExpirationDate: stringOrNull,
+    expirationDueToInactivity: stringOrNull,
+    firstLine: stringOrNull,
+    email: stringOrNull,
+    projectName: stringOrNull,
+    projectGroups: z.array(stringOrNull),
+    proName: stringOrNull,
+    bodyText: stringOrNull,
+    ctaURL: stringOrNull,
+    attemptedCancel: stringOrNull,
+}).strict();
+
+const digestSchema = z
+    .object({
+        countryCode: stringOrNull,
+        startTime: stringOrNull,
+        endTime: stringOrNull,
+        storeNumber: stringOrNull,
+        zipCode: stringOrNull,
+    })
+    .strict();
+
+const securitySchema = z
+    .object({
+        date: stringOrNull,
+        deviceCity: stringOrNull,
+        deviceOS: stringOrNull,
+        passcode: stringOrNull,
+        passwordResetUrl: stringOrNull,
+        phone: stringOrNull,
+    })
+    .strict();
+
+const fromSchema = z
+    .object({
+        email: stringOrNull,
+        name: stringOrNull,
+    })
+    .strict();
+
+const metadataSchema = z
+    .object({
+        key: stringOrNull,
+        value: stringOrNull,
+    })
+    .strict();
+
+export const v1ContractSchema = z.object({
+    templateType: stringOrNull,
+    emailType: stringOrNull,
+    locale: stringOrNull,
+    removeInstallation: stringOrNull,
+    sellingSystem: stringOrNull,
+    deepLink: stringOrNull,
+    optIn: optInSchema,
+    to: z.array(toInfoSchema).nullable(),
+    templateInfo: templateInfoSchema,
+    requestMessageId: stringOrNull,
+    security: securitySchema,
+    digest: digestSchema,
+    from: fromSchema,
+    metadata: z.array(metadataSchema).nullable(),
+    delay: z.any(),
+    subject: stringOrNull,
+    profile: z.any()
+}).strict();
