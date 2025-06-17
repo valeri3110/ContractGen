@@ -97,9 +97,9 @@ export default function LandingPage() {
           >
             Convert to V2 Contract
           </button>
-          <button className="w-full px-4 py-2 bg-white border border-black text-black uppercase font-semibold text-xs rounded-md hover:bg-gray-100 transition">
+          {/* <button className="w-full px-4 py-2 bg-white border border-black text-black uppercase font-semibold text-xs rounded-md hover:bg-gray-100 transition">
             Apply Test Data (Soon)
-          </button>
+          </button> */}
           <div className="h-px w-full bg-black/10" />
           <button
             onClick={() => window.open("https://thd.atlassian.net/wiki/spaces/CC/pages/2540208796/CCAPI+V2+Data+Dictionary", "_blank")}
