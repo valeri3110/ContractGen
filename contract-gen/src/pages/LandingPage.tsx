@@ -7,7 +7,7 @@ import { v2ContractPassthroughSchema } from "../schemas/v2ContractPassthroughSch
 import { v2ContractSchema } from "../schemas/v2ContractSchema";
 import { mapV1toV2Contract } from "../map/mapV1toV2Contract";
 
-export default function ContractGen() {
+export default function LandingPage() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -75,7 +75,7 @@ export default function ContractGen() {
         success={success}
       />
       {/* Control Panel */}
-      <div className="relative flex flex-col items-center justify-center gap-4 w-40 h-full border border-black rounded-lg p-4 shadow-[2px_2px_8px_rgba(0,0,0,0.1)] overflow-hidden">
+      <div className="relative flex flex-col items-center justify-center gap-4 w-60 h-full border border-black rounded-lg p-4 shadow-[2px_2px_8px_rgba(0,0,0,0.1)] overflow-hidden">
         <ControlPanelSVG className="absolute inset-0 w-full h-full z-0" />
         <div className="z-10 w-full flex flex-col items-center gap-4">
           <button

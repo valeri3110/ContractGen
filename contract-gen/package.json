@@ -43,7 +43,7 @@
     "start": "refine start",
     "refine": "refine",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "browserslist": {
     "production": [
@@ -60,5 +60,5 @@
   "refine": {
     "projectId": "p435jj-7KqAWA-O1OLly"
   },
-  "homepage": "https://valeri3110.github.io/ContractGen"
+  "homepage": "https://valeri3110.github.io/contract-gen"
 }

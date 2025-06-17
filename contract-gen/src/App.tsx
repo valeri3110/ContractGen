@@ -4,14 +4,14 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import ContractGen from "./pages/LandingPage";
+import LandingPage from "./pages/LandingPage";
 import FallbackPage from "./pages/FallbackPage";
 
 function App() {
   return (
-    <Router basename="/ContractGen">
+    <Router basename="/contract-gen">
       <Routes>
-        <Route path="/YKPPEF0-ContractFormatter-557763939" element={<ContractGen />} />
+        <Route path="/YKPPEF0-ContractFormatter-557763939" element={<LandingPage />} />
         <Route path="*" element={<FallbackPage />} />
       </Routes>
     </Router>
