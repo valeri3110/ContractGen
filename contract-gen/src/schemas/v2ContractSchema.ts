@@ -196,7 +196,7 @@ const lineItemSchema = z
     storeSku: stringOrNull,
     unitPrice: stringOrNull,
   })
-  .strict();
+  .strict().optional();
 
 const workOrderOrItemGroupSchema = z
   .object({
@@ -207,14 +207,14 @@ const workOrderOrItemGroupSchema = z
     delivery: deliverySchema,
     fulfillmentType: stringOrNull,
     installationProvider: installationProviderSchema,
-    lineItems: z.array(lineItemSchema),
+    lineItems: z.array(lineItemSchema).optional(),
     pickUpDate: stringOrNull,
     pickupLocation: stringOrNull,
     specialInstruction: stringOrNull,
     flocStore: stringOrNull,
     workOrderNumber: stringOrNull,
   })
-  .strict();
+  .strict().optional();
 
 const updatedWorkOrderSchema = z
   .object({
@@ -248,9 +248,9 @@ const orderSchema = z
     stopNumber: stringOrNull,
     viewCartURL: stringOrNull,
     updatedWorkOrders: z.array(updatedWorkOrderSchema).nullable().optional(),
-    workOrdersOrItemGroups: z.array(workOrderOrItemGroupSchema),
+    workOrdersOrItemGroups: z.array(workOrderOrItemGroupSchema).optional(),
   })
-  .strict();
+  .strict().optional();
 
 // Domain/Journey Specific Fields
 const reservationSchema = z
