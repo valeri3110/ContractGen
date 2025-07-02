@@ -1,0 +1,295 @@
+{
+  "appName": "AppName",
+  "attributes": {
+    "clientId": "ClientId"
+  },
+  "digest": {
+    "countryCode": "GA",
+    "startTime": "2025-06-19T08:00:00Z",
+    "endTime": "2025-06-19T17:00:00Z",
+    "storeNumber": "",
+    "zipCode": "12345"
+  },
+  "security": {
+    "date": "2025-06-19",
+    "deviceCity": "Toronto",
+    "deviceOS": "MapleOS 1.0",
+    "passcode": "1234",
+    "passwordResetUrl": "https://example.com",
+    "phone": "+14165551234"
+  },
+  "from": {
+    "email": "email@homedepot.com",
+    "name": "Maple Sender"
+  },
+  "locale": "en-CA",
+  "locations": [
+    { "locationId": "loc1" }
+  ],
+  "metadata": [
+    { "key": "key", "value": "value" }
+  ],
+  "optIn": {
+    "customerGoldenRecordID": "customer-golden-record-Id",
+    "onlineEvoiceOptIn": false,
+    "onlineSmsOptIn": false,
+    "extnCustomerNotificationPreference": "email",
+    "extnSVOCPRSNCustID": "maple-cust-001"
+  },
+  "profile": "profile",
+  "requestMessageId": "msg-001",
+  "subject": "subject",
+  "isAdmin": false,
+  "allowanceAmount": "100.00",
+  "appointment": {
+    "appointmentMode": "virtual",
+    "appointmentType": "consultation",
+    "dateEnd": "2025-06-20",
+    "dateStart": "2025-06-19",
+    "dateTime": "2025-06-19T10:00:00Z",
+    "emailType": "confirmation",
+    "projectType": "projectType",
+    "storeNumber": "1234",
+    "storeType": "main",
+    "timeEnd": "11:00",
+    "timeStart": "10:00",
+    "timeZone": "EST",
+    "webexUrl": "https://homedepot.com/meeting"
+  },
+  "approvedStates": null,
+  "associateFirstName": "Homer",
+  "businessName": "Business Name",
+  "companyName": "Company Name",
+  "customerExperience": "b2c",
+  "customerInfo": {
+    "address": {
+      "addressLine1": "1234 Example Drive",
+      "addressLine2": null,
+      "addressLine3": null,
+      "city": "Atlanta",
+      "state": "GA",
+      "country": "US",
+      "postalCode": "12345"
+    },
+    "firstName": "Homer",
+    "lastName": "DPoe",
+    "phoneNumber": "000-000-0000",
+    "dayPhone": "000-000-0000",
+    "email": "email@homedepot.com"
+  },
+  "extnHostSrcProcess": "100",
+  "flocStore": "1234",
+  "frequency": "monthly",
+  "giftCardPresent": false,
+  "highVolumeVerbiage": "hign volume verbiage",
+  "invitationUrl": "https://homedepot.com/invite",
+  "isAdminInvite": false,
+  "isRunnerInvite": false,
+  "lastModifiedDt": "2025-06-19T12:00:00Z",
+  "militaryDiscountApplied": false,
+  "myAccountLink": "https://homedepot.com/account",
+  "optOutAllLink": "https://homedepot.com/optoutall",
+  "optOutCode": "MAPLE-OUT",
+  "optOutLink": "https://homedepot.com/optout",
+  "order": {
+    "carrier": "Fedex",
+    "carrierName": "Fedex",
+    "customerInfoBillTo": {
+      "address": {
+        "addressLine1": "1234 Example Drive",
+        "addressLine2": null,
+        "addressLine3": null,
+        "city": "Atlanta",
+        "state": "GA",
+        "country": "US",
+        "postalCode": "12345"
+      },
+      "firstName": "Homer",
+      "lastName": "DPoe",
+      "phoneNumber": "+14165551234",
+      "dayPhone": "+14165551234",
+      "email": "email@homedepot.com"
+    },
+    "customerServiceAgreementUrl": "https://homedepot.com/agreement",
+    "extnClientExternalSrcProcess": "100",
+    "isPartial": "false",
+    "multiShipmentOrder": false,
+    "orderDate": "2025-01-11",
+    "orderNumber": "723456789012",
+    "orderType": "delivery",
+    "payment": {
+      "cardNbr": "1234",
+      "isHomeDepotCreditCard": false,
+      "paymentType": "CC",
+      "tenderAmount": "100.00"
+    },
+    "poJobCode": "1234567890",
+    "sourceCd": "10",
+    "storeNumber": "1234",
+    "total": {
+      "deliveryCharge": "10.00",
+      "expressDeliveryCharge": "5.00",
+      "discount": "0.00",
+      "salesTax": "13.00",
+      "shippingFee": "2.00",
+      "subTotal": "80.00",
+      "total": "110.00",
+      "totalRefundAmount": "0.00"
+    },
+    "totalItemCount": "2",
+    "viewCartURL": "https://homedepot.com/cart",
+    "updatedWorkOrders": [
+      {
+        "workOrderNo": "123456789",
+        "reasonCode": "rescheduled"
+      }
+    ],
+    "workOrdersOrItemGroups": [
+      {
+        "cancelCode": "1234",
+        "cancelDate": "2025-06-18",
+        "customerInfoShipTo": {
+          "address": {
+            "addressLine1": "1234 Example Drive",
+            "addressLine2": null,
+            "addressLine3": null,
+            "city": "Atlanta",
+            "state": "GA",
+            "country": "US",
+            "postalCode": "12345"
+          },
+          "firstName": "Homer",
+          "lastName": "DPoe",
+          "phoneNumber": "000-000-0000",
+          "dayPhone": "000-000-0000",
+          "email": "email@homedepot.com"
+        },
+        "customerInfoMarkFor": {
+          "address": {
+            "addressLine1": "1234 Example Drive",
+            "addressLine2": null,
+            "addressLine3": null,
+            "city": "Atlanta",
+            "state": "GA",
+            "country": "US",
+            "postalCode": "12345"
+          },
+          "firstName": "Homer",
+          "lastName": "DPoe",
+          "phoneNumber": "000-000-0000",
+          "dayPhone": "000-000-0000",
+          "email": "email@homedepot.com"
+        },
+        "delivery": {
+          "deliveryDateTimeStart": "2025-06-20T09:00:00Z",
+          "deliveryDateTimeEnd": "2025-06-20T09:00:00Z",
+          "deliveryMessage": "Delivery Message",
+          "deliveryMethod": "Threshold (Inside Entryway)",
+          "deliveryStatus": "rescheduled",
+          "instructionMessage": "Pull all the way in to back of driveway and bring through back door.",
+          "originalETA": "2025-06-20T09:00:00Z",
+          "revisedDeliveryDate": "2025-06-20",
+          "revisedTimeEnd": "12:00",
+          "revisedTimeStart": "09:00",
+          "split": false,
+          "trackingNumber": "TRACK-001",
+          "vehicleType": "van",
+          "trackingUrl": "https://tracking.com/track"
+        },
+        "fulfillmentType": "delivery",
+        "installationProvider": {
+          "installDate": "2025-06-21",
+          "installUrl": "https://homedepot.com/install",
+          "vendorId": "VEND-001",
+          "vendorName": "Vendor Name"
+        },
+        "lineItems": [
+          {
+            "aisle": "A1",
+            "bay": "B1",
+            "cancelQuantity": "0",
+            "colorName": "Color Name",
+            "eligibleProtectionPlans": [
+              {
+                "id": "PLAN-001",
+                "type": "warranty",
+                "description": "2-year warranty",
+                "url": "https://homedepot.com/warranty",
+                "mfgBrandName": "Brand Name",
+                "unitPrice": "20.00",
+                "duration": "2 years",
+                "planDetailsUrl": "https://homedepot.com/plan"
+              }
+            ],
+            "modelNumber": "MAPLE-123",
+            "fulfillmentType": "delivery",
+            "imageURL": "https://homedepot.com/item.jpg",
+            "internetSku": "1234567890",
+            "itemDescription": "Atomic 20V MAX Cordless Brushless Compact 1/2",
+            "itemTotal": "139.00",
+            "manufacturerName": "DEWALT",
+            "model": "MT-2025",
+            "partService": null,
+            "productURL": "https://homedepot.com/table",
+            "quantity": 3,
+            "rgb": "#A0522D",
+            "service": null,
+            "serviceLevelType": null,
+            "shortItemDescription": "Atomic 20V MAX Cordless Brushless Compact 1/2",
+            "storeNumber": "1234",
+            "storeSku": "1234567890",
+            "unitPrice": "139.00"
+          }
+        ],
+        "pickUpDate": "2025-06-20",
+        "pickupLocation": "Store",
+        "specialInstruction": null,
+        "storeNumber": "1234",
+        "workOrderNumber": "1234567890"
+      }
+    ]
+  },
+  "paymentCard": {
+    "cardType": "Visa",
+    "last4Digits": "1234"
+  },
+  "redemptionCode": "12345",
+  "reservation": {
+    "cancelResvLink": "https://homedepot.com/cancel",
+    "createResvLink": "https://homedepot.com/create",
+    "day": "Monday",
+    "manageResvLink": "https://homedepot.com/manage",
+    "optOutCode": "12345",
+    "pickupDate": "2025-06-21",
+    "pickupTime": "10:00",
+    "reservationId": "RESV-001",
+    "returnDate": "2025-06-22",
+    "returnTime": "18:00",
+    "vehicleRental": "Van"
+  },
+  "signOutTimestamp": "2025-06-19T17:00:00Z",
+  "storeNumber": "1234",
+  "supportPhone": "800-340-3376",
+  "surveyLink": "https://homedepot.com/survey",
+  "taxExemptId": "TAX-001",
+  "taxExemptPortalUploadLink": "https://homedepot.com/taxupload",
+  "totalCardsRemoved": "0",
+  "transactionType": "purchase",
+  "weatherVerbiageEnabled": true,
+  "workShop": {
+    "date": "2025-06-25",
+    "message": "Welcome to Home Depot Workshop",
+    "name": "Home Depot Workshop",
+    "time": "14:00"
+  },
+  "to": [
+    {
+      "email": "email@homedepot.com",
+      "id": "1234567890",
+      "firstName": "Homer",
+      "lastName": "DPoe",
+      "sms": "000-000-0000",
+      "evoice": "000-000-0000"
+    }
+  ]
+}
