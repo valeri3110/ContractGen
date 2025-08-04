@@ -1,19 +1,27 @@
 import React from "react";
-import { z } from "zod";
-import { v2ContractSchema } from "../../schemas/v2ContractSchema";
+import { z, ZodSchema } from "zod";
 
 interface Props {
   input: string;
   setOutput: (v: string) => void;
   setError: (v: string | null) => void;
   setSuccess: (v: string | null) => void;
+  schema: ZodSchema<any>;
+  label?: string;
 }
 
-export default function ValidateButton({ input, setOutput, setError, setSuccess }: Props) {
+export default function ValidateButton({
+  input,
+  setOutput,
+  setError,
+  setSuccess,
+  schema,
+  label = "Validate",
+}: Props) {
   const handleClick = () => {
     try {
       const parsed = JSON.parse(input);
-      v2ContractSchema.parse(parsed);
+      schema.parse(parsed);
       const formatted = JSON.stringify(parsed, null, 2);
       setOutput(formatted);
       setError(null);
@@ -39,7 +47,7 @@ export default function ValidateButton({ input, setOutput, setError, setSuccess 
       onClick={handleClick}
       className="w-full px-4 py-2 bg-white border border-black text-black uppercase font-semibold text-xs rounded-md hover:bg-gray-100 transition"
     >
-      Validate V2 Contract
+      {label}
     </button>
   );
 }

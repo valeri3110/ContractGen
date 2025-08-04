@@ -4,9 +4,11 @@ import {
   ValidateButton,
   HydrateButton,
   ControlPanelSVG,
-} from './components/ControlPanel';
-import LeftEditor from './components/LeftEditor';
-import RightEditor from './components/RightEditor';
+} from "./components/ControlPanel";
+import LeftEditor from "./components/LeftEditor";
+import RightEditor from "./components/RightEditor";
+import { v2ContractSchema } from "./schemas/v2ContractSchema";
+import { v2NotifierContractSchema } from "./schemas/v2NotifierContractSchema";
 
 export default function App() {
   const [input, setInput] = useState("");
@@ -36,6 +38,16 @@ export default function App() {
             setOutput={setOutput}
             setError={setError}
             setSuccess={setSuccess}
+            schema={v2ContractSchema}
+            label="Validate V2 Contract"
+          />
+          <ValidateButton
+            input={input}
+            setOutput={setOutput}
+            setError={setError}
+            setSuccess={setSuccess}
+            schema={v2NotifierContractSchema}
+            label="Validate Notifier Contract"
           />
           <HydrateButton
             input={input}
@@ -45,7 +57,12 @@ export default function App() {
           />
           <div className="h-px w-full bg-black/10" />
           <button
-            onClick={() => window.open("https://thd.atlassian.net/wiki/spaces/CC/pages/2540208796/CCAPI+V2+Data+Dictionary", "_blank")}
+            onClick={() =>
+              window.open(
+                "https://thd.atlassian.net/wiki/spaces/CC/pages/2540208796/CCAPI+V2+Data+Dictionary",
+                "_blank"
+              )
+            }
             className="w-full px-4 py-2 bg-black text-white uppercase font-semibold text-xs tracking-wide rounded-md hover:bg-[#333] transition"
           >
             Data Dictionary

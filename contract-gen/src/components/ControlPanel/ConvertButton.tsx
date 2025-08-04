@@ -1,6 +1,6 @@
 import React from "react";
-import { v2ContractPassthroughSchema } from "../../schemas/v2ContractPassthroughSchema";
 import { mapV1toV2Contract } from "../../map/mapV1toV2Contract";
+import { v2ContractSchema } from "../../schemas/v2ContractSchema";
 
 interface Props {
   input: string;
@@ -13,7 +13,7 @@ export default function ConvertButton({ input, setOutput, setError }: Props) {
     try {
       const parsedV1Contract = JSON.parse(input);
       const convertedToV2Contract = mapV1toV2Contract(parsedV1Contract);
-      v2ContractPassthroughSchema.parse(convertedToV2Contract);
+      v2ContractSchema.parse(convertedToV2Contract);
       setOutput(JSON.stringify(convertedToV2Contract, null, 2));
       setError(null);
     } catch (err) {

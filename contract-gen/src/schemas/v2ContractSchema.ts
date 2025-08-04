@@ -3,7 +3,6 @@ import { z } from "zod";
 // Helper types
 const stringOrNull = z.string().nullable().optional();
 const booleanOrNull = z.boolean().nullable().optional();
-const numberOrNull = z.number().nullable().optional();
 
 // Definitions
 const toSchema = z
@@ -87,6 +86,8 @@ const customerInfoSchema = z
 const deliverySchema = z
   .object({
     firstEnrouteFlag: booleanOrNull,
+    signatureRequired: booleanOrNull,
+    stopNumber: stringOrNull,
     deliveryDateTimeDone: stringOrNull,
     deliveryDateTimeStart: stringOrNull,
     deliveryDateTimeEnd: stringOrNull,
@@ -245,7 +246,6 @@ const orderSchema = z
     storeNumber: stringOrNull,
     total: totalSchema,
     totalItemCount: stringOrNull,
-    stopNumber: stringOrNull,
     viewCartURL: stringOrNull,
     updatedWorkOrders: z.array(updatedWorkOrderSchema).nullable().optional(),
     workOrdersOrItemGroups: z.array(workOrderOrItemGroupSchema).optional(),
@@ -315,7 +315,6 @@ const baseSchema = z
     subject: stringOrNull,
     isAdmin: booleanOrNull,
     allowanceAmount: stringOrNull,
-    signatureRequired: booleanOrNull,
     appointment: appointmentSchema,
     approvedStates: z.array(z.any()).optional(),
     associateFirstName: stringOrNull,
