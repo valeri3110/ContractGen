@@ -11,7 +11,7 @@ const toSchema = z.object({
   firstName: z.string(),
   lastName: stringOrNull.optional(),
   sms: stringOrNull.optional(),
-});
+}).strict();
 
 const optInSchema = z.object({
   customerGoldenRecordID: stringOrNull.optional(),
@@ -19,7 +19,7 @@ const optInSchema = z.object({
   onlineSmsOptIn: booleanOrNull.optional(),
   extnCustomerNotificationPreference: stringOrNull.optional(),
   extnSVOCPRSNCustID: stringOrNull.optional(),
-}).optional();
+}).strict().optional();
 
 const addressSchema = z.object({
   addressLine1: stringOrNull,
@@ -29,14 +29,14 @@ const addressSchema = z.object({
   state: stringOrNull,
   postalCode: stringOrNull,
   country: stringOrNull,
-});
+}).strict();
 
 const customerInfoSchema = z.object({
   firstName: stringOrNull,
   lastName: stringOrNull,
   phoneNumber: stringOrNull.optional(),
   address: addressSchema,
-});
+}).strict();
 
 const deliverySchema = z.object({
   deliveryDateTimeStart: stringOrNull.optional(),
@@ -47,7 +47,7 @@ const deliverySchema = z.object({
   instructionMessage: stringOrNull.optional(),
   firstEnrouteFlag: booleanOrNull.optional(),
   trackingUrl: stringOrNull.optional(),
-});
+}).strict();
 
 const lineItemSchema = z.object({
   shortItemDescription: stringOrNull,
@@ -56,7 +56,7 @@ const lineItemSchema = z.object({
   storeSku: stringOrNull,
   quantity: z.union([z.string(), z.number(), z.null()]),
   manufacturerName: stringOrNull.optional(),
-});
+}).strict();
 
 const workOrderOrItemGroupSchema = z.object({
   workOrderNumber: stringOrNull,
@@ -64,13 +64,13 @@ const workOrderOrItemGroupSchema = z.object({
   flocStore: stringOrNull.optional(),
   customerInfoShipTo: customerInfoSchema,
   lineItems: z.array(lineItemSchema).optional(),
-});
+}).strict();
 
 const customerInfoBillToSchema = z.object({
   firstName: stringOrNull,
   lastName: stringOrNull,
   address: addressSchema,
-});
+}).strict();
 
 const orderSchema = z.object({
   extnClientExternalSrcProcess: stringOrNull.optional(),
@@ -81,14 +81,14 @@ const orderSchema = z.object({
   multiShipmentOrder: booleanOrNull.optional(),
   customerInfoBillTo: customerInfoBillToSchema,
   workOrdersOrItemGroups: z.array(workOrderOrItemGroupSchema),
-});
+}).strict();
 
 export const v2NotifierContractSchema = z.object({
   requestMessageId: z.string(),
   appName: z.string(),
   attributes: z.object({
     clientId: z.string(),
-  }),
+  }).strict(),
   optIn: optInSchema,
   to: z.array(toSchema),
   customerExperience: z.string(),
