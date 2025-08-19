@@ -4,6 +4,7 @@ import {
   ValidateButton,
   HydrateButton,
   ControlPanelSVG,
+  RemoveCustomerInfoButton
 } from "./components/ControlPanel";
 import LeftEditor from "./components/LeftEditor";
 import RightEditor from "./components/RightEditor";
@@ -31,6 +32,12 @@ export default function App() {
             input={input}
             setOutput={setOutput}
             setError={setError}
+          />
+          <RemoveCustomerInfoButton
+            input={input}
+            setOutput={setOutput}
+            setError={setError}
+            setSuccess={setSuccess}
           />
           <div className="h-px w-full bg-black/10" />
           <ValidateButton
