@@ -26,8 +26,8 @@ const fromSchema = z
 const optInSchema = z
   .object({
     customerGoldenRecordID: stringOrNull,
-    onlineEvoiceOptIn: booleanOrNull,
-    onlineSmsOptIn: booleanOrNull,
+    onlineEvoiceOptIn: z.union([z.boolean(), z.string()]).nullable().optional(),
+    onlineSmsOptIn: z.union([z.boolean(), z.string()]).nullable().optional(),
     extnCustomerNotificationPreference: stringOrNull,
     extnSVOCPRSNCustID: stringOrNull,
   })
@@ -67,6 +67,7 @@ const addressSchema = z
     addressLine2: stringOrNull,
     addressLine3: stringOrNull,
     city: stringOrNull,
+    county: stringOrNull,
     state: stringOrNull,
     country: stringOrNull,
     postalCode: stringOrNull,
@@ -80,6 +81,18 @@ const customerInfoSchema = z
     lastName: stringOrNull,
     phoneNumber: stringOrNull,
     email: stringOrNull,
+    emailId: stringOrNull,
+    reset: stringOrNull,
+    cardType: stringOrNull,
+    customerName: stringOrNull,
+    customerType: stringOrNull,
+    dayPhone: stringOrNull,
+    loginID: stringOrNull,
+    oldEmail: stringOrNull,
+    organizationName: stringOrNull,
+    passwordUrl: stringOrNull,
+    svocIdValue: stringOrNull,
+    timeZone: stringOrNull,
   })
   .strict().optional();
 
@@ -101,6 +114,9 @@ const deliverySchema = z
     trackingNumber: stringOrNull,
     vehicleType: stringOrNull,
     trackingUrl: stringOrNull,
+    siteInstructions: stringOrNull,
+    carrier: stringOrNull,
+    carrierName: stringOrNull,
   })
   .strict().optional();
 
@@ -188,6 +204,7 @@ const lineItemSchema = z
     model: stringOrNull,
     partService: z.array(partServiceSchema).nullable().optional(),
     productURL: stringOrNull,
+    purchaseOrderDeliveries: z.array(z.any()).nullable().optional(),
     quantity: z.union([z.string(), z.number(), z.null()]),
     rgb: stringOrNull,
     service: z.array(serviceSchema).nullable().optional(),
@@ -196,6 +213,8 @@ const lineItemSchema = z
     storeNumber: stringOrNull,
     storeSku: stringOrNull,
     unitPrice: stringOrNull,
+    vendorName: stringOrNull,
+    vendorNumber: stringOrNull,
   })
   .strict().optional();
 
@@ -204,7 +223,7 @@ const workOrderOrItemGroupSchema = z
     cancelCode: stringOrNull,
     cancelDate: stringOrNull,
     customerInfoShipTo: customerInfoSchema,
-    customerInfoMarkFor: customerInfoSchema,
+    customerInfoMarkFor: customerInfoSchema.nullable().optional(),
     delivery: deliverySchema,
     fulfillmentType: stringOrNull,
     installationProvider: installationProviderSchema,
@@ -214,6 +233,11 @@ const workOrderOrItemGroupSchema = z
     specialInstruction: stringOrNull,
     flocStore: stringOrNull,
     workOrderNumber: stringOrNull,
+    expectedDate: stringOrNull,
+    orderStatus: stringOrNull,
+    purpose: stringOrNull,
+    storeDetails: stringOrNull,
+    storeNumber: stringOrNull,
   })
   .strict().optional();
 
@@ -232,10 +256,23 @@ const orderSchema = z
       address: addressSchema,
       firstName: stringOrNull,
       lastName: stringOrNull,
+      phoneNumber: stringOrNull,
+      email: stringOrNull,
+      reset: stringOrNull,
+      cardType: stringOrNull,
+      customerName: stringOrNull,
+      customerType: stringOrNull,
+      dayPhone: stringOrNull,
+      loginID: stringOrNull,
+      oldEmail: stringOrNull,
+      organizationName: stringOrNull,
+      passwordUrl: stringOrNull,
+      svocIdValue: stringOrNull,
     }).strict().optional(),
     customerServiceAgreementUrl: stringOrNull,
     extnClientExternalSrcProcess: stringOrNull,
     isPartial: stringOrNull,
+    isMilitaryPostOffice: booleanOrNull,
     multiShipmentOrder: booleanOrNull,
     orderDate: stringOrNull,
     orderNumber: stringOrNull,
@@ -249,6 +286,10 @@ const orderSchema = z
     viewCartURL: stringOrNull,
     updatedWorkOrders: z.array(updatedWorkOrderSchema).nullable().optional(),
     workOrdersOrItemGroups: z.array(workOrderOrItemGroupSchema).optional(),
+    storeDetails: stringOrNull,
+    projectId: stringOrNull,
+    orderItems: stringOrNull,
+    restructuredBO: stringOrNull,
   })
   .strict().optional();
 
@@ -316,7 +357,7 @@ const baseSchema = z
     isAdmin: booleanOrNull,
     allowanceAmount: stringOrNull,
     appointment: appointmentSchema,
-    approvedStates: z.array(z.any()).optional(),
+    approvedStates: z.array(z.any()).nullable().optional(),
     associateFirstName: stringOrNull,
     businessName: stringOrNull,
     companyName: stringOrNull,
@@ -353,6 +394,34 @@ const baseSchema = z
     weatherVerbiageEnabled: booleanOrNull,
     workShop: workShopSchema,
     to: z.array(toSchema),
+    accountHolder: stringOrNull,
+    attachments: z.array(z.any()).nullable().optional(),
+    rejectionReasons: z.array(z.any()).nullable().optional(),
+    shortUrls: z.array(z.any()).nullable().optional(),
+    channels: stringOrNull,
+    receipt: stringOrNull,
+    communicationId: stringOrNull,
+    expirationTs: stringOrNull,
+    invitationExpirationDate: stringOrNull,
+    postMessage: stringOrNull,
+    preMessage: stringOrNull,
+    reason: stringOrNull,
+    redirectUrl: stringOrNull,
+    selfAssign: stringOrNull,
+    sku: stringOrNull,
+    status: stringOrNull,
+    storeDetails: stringOrNull,
+    supportForm: stringOrNull,
+    proContactNumber: stringOrNull,
+    svocId: stringOrNull,
+    templateName: stringOrNull,
+    stored: booleanOrNull,
+    cxReturnInfo: stringOrNull,
+    total: stringOrNull,
+    bccs: z.array(z.any()).nullable().optional(),
+    ccs: z.array(z.any()).nullable().optional(),
+    documentDetails: stringOrNull,
+    lastModifiedDate: stringOrNull,
   })
   .strict();
 
