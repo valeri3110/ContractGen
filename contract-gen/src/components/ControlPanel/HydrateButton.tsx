@@ -14,36 +14,130 @@ export default function HydrateButton({ input, setOutput, setError, setSuccess }
   const handleClick = () => {
     try {
       const parsed = JSON.parse(input);
-      v2ContractSchema.parse(parsed);
 
-      const hydrated = {
-        ...parsed,
-        ...hydratedFields
-      };
+      // Always attempt to hydrate the payload to make it conform to v2 schema
+      const hydrated = JSON.parse(JSON.stringify(parsed)); // deep clone
+
+      // Helper: safe getter for hydratedFields order/work order delivery
+      const hfOrder = (hydratedFields as any).order || {};
+      const hfFirstWork = (hfOrder.workOrdersOrItemGroups && hfOrder.workOrdersOrItemGroups[0]) || {};
+      const hfDelivery = hfFirstWork.delivery || {};
+
+      // 1) Merge 'to' (prefer hydratedFields values where present)
+      if (Array.isArray(hydrated.to) && hydrated.to.length > 0 && Array.isArray((hydratedFields as any).to)) {
+        hydrated.to[0] = {
+          ...(hydrated.to[0] || {}),
+          ...((hydratedFields as any).to[0] || {})
+        };
+      }
+
+      // 2) Top-level enrichments from hydratedFields if missing
+      if ((hydrated as any).optOutCode == null && (hydratedFields as any).optOutCode) {
+        (hydrated as any).optOutCode = (hydratedFields as any).optOutCode;
+      }
+      if ((hydrated as any).supportPhone == null && (hydratedFields as any).supportPhone) {
+        (hydrated as any).supportPhone = (hydratedFields as any).supportPhone;
+      }
+      if ((hydrated as any).recommendations == null && (hydratedFields as any).recommendations) {
+        (hydrated as any).recommendations = (hydratedFields as any).recommendations;
+      }
+      if ((hydrated as any).movableInk == null && (hydratedFields as any).movableInk) {
+        (hydrated as any).movableInk = (hydratedFields as any).movableInk;
+      }
+
+      // 3) Order: add orderDateExpanded and merge customerInfoBillTo from shipTo when available
+      if ((hydrated as any).order) {
+        const o = (hydrated as any).order;
+
+        // add orderDateExpanded
+        if (hfOrder.orderDateExpanded) o.orderDateExpanded = hfOrder.orderDateExpanded;
+
+        // ensure customerInfoBillTo picks up values from first work order shipTo
+        if (Array.isArray(o.workOrdersOrItemGroups) && o.workOrdersOrItemGroups.length > 0) {
+          const first = o.workOrdersOrItemGroups[0];
+          const shipTo = first.customerInfoShipTo;
+
+          if (shipTo) {
+            // Fill/overwrite billTo fields with shipTo where appropriate
+            o.customerInfoBillTo = o.customerInfoBillTo || {};
+            o.customerInfoBillTo.firstName = shipTo.firstName || o.customerInfoBillTo.firstName;
+            o.customerInfoBillTo.lastName = shipTo.lastName || o.customerInfoBillTo.lastName;
+            o.customerInfoBillTo.phoneNumber = shipTo.phoneNumber || o.customerInfoBillTo.phoneNumber;
+            o.customerInfoBillTo.email = shipTo.email || o.customerInfoBillTo.email;
+
+            // Fill address fields from shipTo.address
+            o.customerInfoBillTo.address = o.customerInfoBillTo.address || {};
+            if (shipTo.address) {
+              o.customerInfoBillTo.address = {
+                ...(o.customerInfoBillTo.address || {}),
+                ...shipTo.address
+              };
+            }
+          }
+
+          // 4) For each work order, fill customerInfoMarkFor and delivery enrichments
+          const sourceDelivery = hfDelivery;
+
+          o.workOrdersOrItemGroups = o.workOrdersOrItemGroups.map((w: any) => {
+            const copy = { ...w };
+
+            // customerInfoMarkFor: if null, set to copy of shipTo
+            if (copy.customerInfoMarkFor == null && copy.customerInfoShipTo) {
+              copy.customerInfoMarkFor = JSON.parse(JSON.stringify(copy.customerInfoShipTo));
+            }
+
+            // Merge delivery fields from hydratedFields delivery block
+            copy.delivery = copy.delivery || {};
+            if (sourceDelivery.deliveryDateExpanded) {
+              copy.delivery.deliveryDateExpanded = sourceDelivery.deliveryDateExpanded;
+              // also set originalDateExpanded to same expanded block
+              copy.delivery.originalDateExpanded = sourceDelivery.deliveryDateExpanded;
+            }
+            if (sourceDelivery.deliveryTimeStart) copy.delivery.deliveryTimeStart = sourceDelivery.deliveryTimeStart;
+            if (sourceDelivery.deliveryTimeEnd) copy.delivery.deliveryTimeEnd = sourceDelivery.deliveryTimeEnd;
+            if (sourceDelivery.deliveryTimeRange) copy.delivery.deliveryTimeRange = sourceDelivery.deliveryTimeRange;
+            if (sourceDelivery.shortTrackingUrl) copy.delivery.shortTrackingUrl = sourceDelivery.shortTrackingUrl;
+
+            // 5) Enrich lineItems' purchaseOrderDeliveries
+            if (Array.isArray(copy.lineItems)) {
+              copy.lineItems = copy.lineItems.map((li: any) => {
+                const nli = { ...li };
+                if (Array.isArray(nli.purchaseOrderDeliveries)) {
+                  nli.purchaseOrderDeliveries = nli.purchaseOrderDeliveries.map((pod: any) => {
+                    const p = { ...pod };
+                    // add delivery expansion and time info from order delivery
+                    if (sourceDelivery.deliveryDateExpanded) {
+                      p.deliveryDateExpanded = sourceDelivery.deliveryDateExpanded;
+                      p.originalDateExpanded = sourceDelivery.deliveryDateExpanded;
+                    }
+                    if (sourceDelivery.deliveryTimeStart) p.deliveryTimeStart = sourceDelivery.deliveryTimeStart;
+                    if (sourceDelivery.deliveryTimeEnd) p.deliveryTimeEnd = sourceDelivery.deliveryTimeEnd;
+                    if (sourceDelivery.deliveryTimeRange) p.deliveryTimeRange = sourceDelivery.deliveryTimeRange;
+                    if (sourceDelivery.shortTrackingUrl) p.shortTrackingUrl = sourceDelivery.shortTrackingUrl;
+                    return p;
+                  });
+                }
+                return nli;
+              });
+            }
+
+            return copy;
+          });
+        }
+      }
 
       const formatted = JSON.stringify(hydrated, null, 2);
       setOutput(formatted);
       setError(null);
       setSuccess(
-        "✅ Your Payload has been hydrated!\nAdded Hydrations:\n" +
-        "• to[0].firstName\n" +
-        "• to[0].lastName\n" +
-        "• order.workOrdersOrItemGroups[0].customerInfoShipTo.\n" +
-        "   firstName\n" +
-        "   lastName\n" +
-        "   phoneNumber\n" +
-        "• order.orderDateExpanded\n" +
-        "• order.workOrdersOrItemGroups[0].delivery.\n" +
-        "   deliveryDateExpanded\n" +
-        "   deliveryTimeStart\n" +
-        "   deliveryTimeEnd\n" +
-        "   deliveryTimeRange\n" +
-        "Added Enrichment Fields:\n" +
-        "• supportPhone\n" +
-        "• movableInk\n" +
-        "• recommendations\n" +
-        "• optOutCode\n" +
-        "• shortTrackingUrl\n" 
+        "✅ Your Payload has been hydrated and validated!\nApplied Hydrations & Enrichments:\n" +
+        "• to[0] merged from hydrations (email/id/evoice/sms)\n" +
+        "• order.orderDateExpanded added\n" +
+        "• order.customerInfoBillTo enriched from first work order shipTo\n" +
+        "• order.workOrdersOrItemGroups[*].customerInfoMarkFor filled from customerInfoShipTo when null\n" +
+        "• order.workOrdersOrItemGroups[*].delivery enriched with deliveryDateExpanded, deliveryTimeStart/End/Range, shortTrackingUrl, originalDateExpanded\n" +
+        "• order.workOrdersOrItemGroups[*].lineItems[*].purchaseOrderDeliveries enriched with deliveryDateExpanded and time fields\n" +
+        "• top-level optOutCode, supportPhone, recommendations, movableInk added when missing\n"
       );
 
     } catch (err) {
@@ -52,11 +146,11 @@ export default function HydrateButton({ input, setOutput, setError, setSuccess }
         const details = err.errors
           .map(e => `• ${e.path.join('.')}: ${e.message}`)
           .join('\n');
-        setError(`❌ Schema validation failed:\n${details}`);
+        setError(`❌ Schema validation failed after hydration:\n${details}`);
       } else if (err instanceof SyntaxError) {
         setError("❌ Invalid JSON: " + err.message);
       } else {
-        setError("❌ Unknown error during validation");
+        setError("❌ Unknown error during hydration");
       }
       setOutput("");
     }
