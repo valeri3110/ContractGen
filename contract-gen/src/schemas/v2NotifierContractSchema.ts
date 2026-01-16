@@ -11,12 +11,18 @@ const toSchema = z.object({
   firstName: z.string(),
   lastName: stringOrNull.optional(),
   sms: stringOrNull.optional(),
+  evoice: stringOrNull.optional(),
 }).strict();
+
+const metadataSchema = z.object({
+  key: stringOrNull.optional(),
+  value: stringOrNull.optional(),
+}).strict().optional();
 
 const optInSchema = z.object({
   customerGoldenRecordID: stringOrNull.optional(),
-  onlineEvoiceOptIn: booleanOrNull.optional(),
-  onlineSmsOptIn: booleanOrNull.optional(),
+  onlineEvoiceOptIn: z.union([z.boolean(), z.string()]).nullable().optional(),
+  onlineSmsOptIn: z.union([z.boolean(), z.string()]).nullable().optional(),
   extnCustomerNotificationPreference: stringOrNull.optional(),
   extnSVOCPRSNCustID: stringOrNull.optional(),
 }).strict().optional();
@@ -39,14 +45,23 @@ const customerInfoSchema = z.object({
 }).strict();
 
 const deliverySchema = z.object({
+  stopNumber: stringOrNull.optional(),
   deliveryDateTimeStart: stringOrNull.optional(),
   deliveryDateTimeEnd: stringOrNull.optional(),
   deliveryDateTimeDone: stringOrNull.optional(),
+  originalDateTimeStart: stringOrNull.optional(),
+  originalDateTimeEnd: stringOrNull.optional(),
   deliveryMethod: stringOrNull.optional(),
   vehicleType: stringOrNull.optional(),
   instructionMessage: stringOrNull.optional(),
   firstEnrouteFlag: booleanOrNull.optional(),
   trackingUrl: stringOrNull.optional(),
+  trackingNumber: stringOrNull.optional(),
+  signatureRequired: booleanOrNull.optional(),
+  carrier: stringOrNull.optional(),
+  carrierName: stringOrNull.optional(),
+  serviceLevelDescription: stringOrNull.optional(),
+  shipNode: stringOrNull.optional(),
 }).strict();
 
 const lineItemSchema = z.object({
@@ -59,10 +74,11 @@ const lineItemSchema = z.object({
 }).strict();
 
 const workOrderOrItemGroupSchema = z.object({
-  workOrderNumber: stringOrNull,
+  workOrderNumber: stringOrNull.optional(),
   delivery: deliverySchema,
   flocStore: stringOrNull.optional(),
   customerInfoShipTo: customerInfoSchema,
+  customerInfoMarkFor: customerInfoSchema.optional(),
   lineItems: z.array(lineItemSchema).optional(),
 }).strict();
 
@@ -89,6 +105,7 @@ export const v2NotifierContractSchema = z.object({
   attributes: z.object({
     clientId: z.string(),
   }).strict(),
+  metadata: z.array(metadataSchema).optional(),
   optIn: optInSchema,
   to: z.array(toSchema),
   customerExperience: z.string(),

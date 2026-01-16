@@ -109,6 +109,8 @@ const deliverySchema = z
     deliveryStatus: stringOrNull,
     instructionMessage: stringOrNull,
     originalETA: stringOrNull,
+    originalDateTimeStart: stringOrNull,
+    originalDateTimeEnd: stringOrNull,
     revisedDeliveryDate: stringOrNull,
     split: booleanOrNull,
     trackingNumber: stringOrNull,
@@ -117,6 +119,8 @@ const deliverySchema = z
     siteInstructions: stringOrNull,
     carrier: stringOrNull,
     carrierName: stringOrNull,
+    serviceLevelDescription: stringOrNull,
+    shipNode: stringOrNull,
   })
   .strict().optional();
 
