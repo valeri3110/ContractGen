@@ -46,6 +46,7 @@ const customerInfoSchema = z.object({
 
 const deliverySchema = z.object({
   stopNumber: stringOrNull.optional(),
+  deliveryDate: stringOrNull.optional(),
   deliveryDateTimeStart: stringOrNull.optional(),
   deliveryDateTimeEnd: stringOrNull.optional(),
   deliveryDateTimeDone: stringOrNull.optional(),
@@ -62,6 +63,7 @@ const deliverySchema = z.object({
   carrierName: stringOrNull.optional(),
   serviceLevelDescription: stringOrNull.optional(),
   shipNode: stringOrNull.optional(),
+  dedicatedDelivery: booleanOrNull.optional(),
 }).strict();
 
 const lineItemSchema = z.object({
